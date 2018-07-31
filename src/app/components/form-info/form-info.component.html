@@ -1,0 +1,382 @@
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+      Registrar persona
+  </div>
+
+  <div class="panel-body">
+      <form class="form-horizontal"
+            novalidate
+            (ngSubmit)="save()"
+            [formGroup]=personaForm>
+          <fieldset>
+
+            <input type="hidden" name="tipoRefAcom" formControlName="documento" value="">
+
+            <div class="form-group"
+                [ngClass]="{'has-error': (personaForm.get('tipoProfPac').touched || personaForm.get('tipoProfPac').dirty) && !personaForm.get('tipoProfPac').valid }">
+                <label class="col-md-2 col-lg-2 col-sm-2 control-label" 
+                      for="tipoProfPacId">Tipo Persona</label>
+
+                <div class="col-md-8 col-lg-8 col-sm-8">
+                    <select class="form-control"
+                            id="tipoProfPacId"
+                            formControlName="tipoProfPac" >
+                          <option value="" disabled selected hidden>Seleccione un tipo de persona...</option>
+                          <option value="profesional">Profesional</option>
+                          <option value="paciente">paciente</option>
+                    </select>
+                    <span class="help-block" *ngIf="(personaForm.get('tipoProfPac').touched || personaForm.get('tipoProfPac').dirty) && personaForm.get('tipoProfPac').errors">
+                        <span *ngIf="personaForm.get('tipoProfPac').errors.required">
+                            Por favor seleccione un tipo de persona
+                        </span>                       
+                    </span>
+                </div>
+              </div>  
+
+              <div class="form-group"
+                  [ngClass]="{'has-error': (personaForm.get('tipoDocumento').touched || personaForm.get('tipoDocumento').dirty) && !personaForm.get('tipoDocumento').valid }">
+                  <label class="col-md-2 col-lg-2 col-sm-2 control-label" 
+                        for="tipoDocumentoId">Tipo documento</label>
+
+                  <div class="col-md-8 col-lg-8 col-sm-8">
+                      <select class="form-control"
+                              id="tipoDocumentoId"
+                              formControlName="tipoDocumento" >
+                            <option value="" disabled selected hidden>Seleccione un tipo de documento...</option>
+                            <option value="cedula">Cedula</option>
+                            <option value="pasaporte">Pasaporte</option>
+                      </select>
+                      <span class="help-block" *ngIf="(personaForm.get('tipoDocumento').touched || personaForm.get('tipoDocumento').dirty) && personaForm.get('tipoDocumento').errors">
+                          <span *ngIf="personaForm.get('tipoDocumento').errors.required">
+                              Por favor seleccione un tipo de documento
+                          </span>                            
+                      </span>
+                  </div>
+              </div>           
+
+              <div class="form-group"
+                  [ngClass]="{'has-error': (personaForm.get('documento').touched || personaForm.get('documento').dirty) && !personaForm.get('documento').valid }">
+                  <label class="col-md-2 col-lg-2 col-sm-2 control-label" 
+                         for="documentoId">N° Documento</label>
+
+                  <div class="col-md-8 col-lg-8 col-sm-8">
+                      <input class="form-control" 
+                             id="documentoId" 
+                             type="text" 
+                             placeholder="N° Documento (requerido)" 
+                             required 
+                             formControlName="documento" />
+                      <span class="help-block" *ngIf="(personaForm.get('documento').touched || personaForm.get('documento').dirty) && personaForm.get('documento').errors">
+                          <span *ngIf="personaForm.get('documento').errors.required">
+                              Por favor ingrese número de documento
+                          </span>                   
+                          <span *ngIf="personaForm.get('documento').errors.pattern">
+                            Por favor ingrese un número de documento válido
+                          </span>  
+                      </span>
+                  </div>
+              </div>
+
+              <div class="form-group"
+                  [ngClass]="{'has-error': (personaForm.get('nombres').touched || personaForm.get('nombres').dirty) && !personaForm.get('nombres').valid }">
+                  <label class="col-md-2 col-lg-2 col-sm-2 control-label" 
+                        for="nombresId">Nombres</label>
+
+                  <div class="col-md-8 col-lg-8 col-sm-8">
+                      <input class="form-control" 
+                            id="nombresId" 
+                            type="text" 
+                            placeholder="Nombres (requerido)" 
+                            formControlName="nombres" />
+                      <span class="help-block" *ngIf="(personaForm.get('nombres').touched || personaForm.get('nombres').dirty) && personaForm.get('nombres').errors">
+                          <span *ngIf="personaForm.get('nombres').errors.required">
+                              Por favor ingrese los nombres
+                          </span>
+                          <span *ngIf="personaForm.get('nombres').errors.minlength">
+                            Los nombres deben ser de mínimo dos caracteres
+                          </span>                          
+                      </span>
+                  </div>
+              </div>
+
+              <div class="form-group"
+                  [ngClass]="{'has-error': apellidosMessage }">
+                  <label class="col-md-2 col-sm-2 col-lg-2 control-label" 
+                      for="apellidosId">Apellidos</label>
+
+                  <div class="col-md-8 col-sm-8 col-lg-8">
+                      <input class="form-control" 
+                             id="apellidosId" 
+                             type="text" 
+                             placeholder="Apellidos (requerido)" 
+                             formControlName="apellidos" />
+                      <span class="help-block" *ngIf="apellidosMessage">
+                          {{ apellidosMessage}}
+                      </span>
+                  </div>
+              </div>
+
+              <div class="form-group"
+                  [ngClass]="{'has-error': (personaForm.get('fechaNacimiento').touched || personaForm.get('fechaNacimiento').dirty) && !personaForm.get('fechaNacimiento').valid }">
+                  <label class="col-md-2 col-lg-2 col-sm-2 control-label" 
+                        for="fechaNacimientoId">Fecha de Nacimiento</label>
+
+                  <div class="col-md-8 col-sm-8 col-lg-8">
+                      <input class="form-control" 
+                            id="fechaNacimientoId" 
+                            type="date" 
+                            placeholder="Nombres (requerido)" 
+                            formControlName="fechaNacimiento" />
+                      <span class="help-block" *ngIf="(personaForm.get('fechaNacimiento').touched || personaForm.get('fechaNacimiento').dirty) && personaForm.get('fechaNacimiento').errors">
+                          <span *ngIf="personaForm.get('fechaNacimiento').errors.required">
+                              Ingrese una fecha de nacimiento
+                          </span>
+                          <span *ngIf="personaForm.get('fechaNacimiento').errors.noFecha">
+                            Ingrese una fecha de nacimiento válida
+                          </span>                          
+                      </span>
+                  </div>
+              </div>
+
+
+              <div class="form-group"
+                  [ngClass]="{'has-error': (personaForm.get('correo').touched || personaForm.get('correo').dirty) && !personaForm.get('correo').valid }">
+                  <label class="col-md-2 col-lg-2 col-sm-2 control-label" 
+                      for="correoId">Correo electrónico</label>
+
+                  <div class="col-md-8 col-sm-8 col-lg-8">
+                      <input class="form-control" 
+                             id="correoId" 
+                             type="email" 
+                             placeholder="Correo" 
+                             formControlName="correo" />
+                      <span class="help-block" *ngIf="(personaForm.get('correo').touched || personaForm.get('correo').dirty) && personaForm.get('correo').errors">
+                          <span *ngIf="personaForm.get('correo').errors.pattern">
+                            Por favor ingrese un correo electrónico válido
+                          </span>
+
+                          <!-- This one does not work -->
+                          <span *ngIf="personaForm.get('correo').errors.email">
+                            Por favor ingrese un correo electrónico válido
+                          </span>
+                      </span>
+                  </div>
+              </div>
+              
+              <div class="row">    
+
+                <div class="col-md-3 col-sm-3 col-lg-3 col-md-offset-2 col-sm-offset-2 col-lg-offset-2">
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-sm-offset-1 col-lg-offset-1 col-md-8 col-sm-8 col-lg-8 checkbox" >
+                            <label>
+                                <input id="sinTelefonoId"
+                                      type="checkbox"
+                                      formControlName="sinTelefono" 
+                                      >
+                                Sin Teléfono
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-lg-6 col-lg-offset-1 col-sm-offset-1 col-md-offset-1" *ngIf="!personaForm.get('sinTelefono').value">
+                  <div class="form-group"
+                    [ngClass]="{'has-error': (personaForm.get('telefono').touched || personaForm.get('telefono').dirty) && !personaForm.get('telefono').valid }">
+                    <label class="col-md-2 col-lg-2 col-sm-2 control-label" 
+                        for="telefonoId">telefono</label>
+
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                      <input class="form-control" 
+                            id="telefonoId" 
+                            type="tel" 
+                            placeholder="Telefono (requerido)" 
+                            formControlName="telefono" />
+                      <span class="help-block" *ngIf="(personaForm.get('telefono').touched || personaForm.get('telefono').dirty) && personaForm.get('telefono').errors">
+                          <span *ngIf="personaForm.get('telefono').errors.required">
+                            Por favor ingrese el teléfono
+                          </span>
+                          <span *ngIf="personaForm.get('telefono').errors.noTelefono">
+                            Por favor ingrese un teléfono válido de entre 7 y 10 dígitos    
+                          </span>                          
+                      </span>
+                    </div>
+                  </div>      
+                </div>      
+              </div>
+
+              <div class="form-group">
+                  <div class="col-md-offset-1 col-sm-offset-1 col-lg-offset-1 col-md-8 col-sm-8 col-lg-8 checkbox" >
+                      <label>
+                          <input id="sinReferenciasId"
+                                type="checkbox"
+                                formControlName="sintipoRefAcom" >
+                            Sin Referencias
+                      </label>
+                  </div>
+              </div>
+
+              <div *ngIf="!personaForm.get('sintipoRefAcom').value">
+
+                  <div class="form-group"
+                      [ngClass]="{'has-error': (personaForm.get('nombresRefAcom').touched || personaForm.get('nombresRefAcom').dirty) && !personaForm.get('nombresRefAcom').valid }">
+                      <label class="col-md-2 col-lg-2 col-sm-2 control-label" 
+                            for="nombresRefAcomId">Nombres</label>
+
+                      <div class="col-md-8 col-sm-8 col-lg-8">
+                          <input class="form-control" 
+                                id="nombresRefAcomId" 
+                                type="text" 
+                                placeholder="Nombres (requerido)" 
+                                formControlName="nombresRefAcom" />
+                          <span class="help-block" *ngIf="(personaForm.get('nombresRefAcom').touched || personaForm.get('nombresRefAcom').dirty) && personaForm.get('nombresRefAcom').errors">
+                              <span *ngIf="personaForm.get('nombresRefAcom').errors.required">
+                                  Por favor ingrese los nombres
+                              </span>
+                              <span *ngIf="personaForm.get('nombresRefAcom').errors.minlength">
+                                Los nombres deben ser de mínimo dos caracteres
+                              </span>                          
+                          </span>
+                      </div>
+                  </div>   
+
+                  <div class="form-group"
+                      [ngClass]="{'has-error': (personaForm.get('apellidosRefAcom').touched || personaForm.get('apellidosRefAcom').dirty) && !personaForm.get('apellidosRefAcom').valid }">
+                      <label class="col-md-2 col-lg-2 col-sm-2 control-label" 
+                            for="apellidosRefAcomId">Apellidos</label>
+
+                      <div class="col-md-8 col-sm-8 col-lg-8">
+                          <input class="form-control" 
+                                id="apellidosRefAcomId" 
+                                type="text" 
+                                placeholder="Apellidos (requerido)" 
+                                formControlName="apellidosRefAcom" />
+                          <span class="help-block" *ngIf="(personaForm.get('apellidosRefAcom').touched || personaForm.get('apellidosRefAcom').dirty) && personaForm.get('apellidosRefAcom').errors">
+                              <span *ngIf="personaForm.get('apellidosRefAcom').errors.required">
+                                  Por favor ingrese los apellidos
+                              </span>
+                              <span *ngIf="personaForm.get('apellidosRefAcom').errors.minlength">
+                                Los apellidos deben ser de mínimo dos caracteres
+                              </span>                          
+                          </span>
+                      </div>
+                  </div> 
+
+                  <div class="form-group"
+                      [ngClass]="{'has-error': (personaForm.get('parentescoRefAcom').touched || personaForm.get('parentescoRefAcom').dirty) && !personaForm.get('parentescoRefAcom').valid }">
+                      <label class="col-md-2 col-lg-2 col-sm-2 control-label" 
+                            for="parentescoRefAcomId">Parentesco</label>
+
+                      <div class="col-md-8 col-sm-8 col-lg-8">
+                          <select class="form-control"
+                                  id="parentescoRefAcomId"
+                                  formControlName="parentescoRefAcom" >
+                                <option value="" disabled selected hidden>Seleccione un parentezco...</option>
+                                <option value="madre">Madre</option>
+                                <option value="padre">Padre</option>
+                                <option value="amigo">amigo</option>
+                                <option value="hermana">hermana</option>
+                          </select>
+                          <span class="help-block" *ngIf="(personaForm.get('parentescoRefAcom').touched || personaForm.get('parentescoRefAcom').dirty) && personaForm.get('parentescoRefAcom').errors">
+                              <span *ngIf="personaForm.get('parentescoRefAcom').errors.required">
+                                  Por favor seleccione un parentesco
+                              </span>                       
+                          </span>
+                      </div>
+                  </div> 
+
+
+                  <div class="row">    
+
+                    <div class="col-md-3 col-lg-3 col-sm-3 col-md-offset-2 col-lg-offset-2 col-sm-offset-2">
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-sm-offset-1 col-lg-offset-1 col-md-8 col-sm-8 col-lg-8 checkbox" >
+                                <label>
+                                    <input id="sinTelefonoRefAcomId"
+                                          type="checkbox"
+                                          formControlName="sinTelefonoRefAcom" 
+                                          >
+                                    Sin Teléfono
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-sm-6 col-lg-6 col-md-6 col-md-offset-1 col-lg-offset-1 col-sm-offset-1" *ngIf="!personaForm.get('sinTelefonoRefAcom').value">
+                      <div class="form-group"
+                        [ngClass]="{'has-error': (personaForm.get('telefonoRefAcom').touched || personaForm.get('telefonoRefAcom').dirty) && !personaForm.get('telefonoRefAcom').valid }">
+                        <label class="col-md-2 col-lg-2 col-sm-2 control-label" 
+                            for="telefonoRefAcomId">telefono</label>
+    
+                        <div class="col-md-6 col-sm-6 col-lg-6">
+                          <input class="form-control" 
+                                id="telefonoRefAcomId" 
+                                type="tel" 
+                                placeholder="Telefono (requerido)" 
+                                formControlName="telefonoRefAcom" />
+                          <span class="help-block" *ngIf="(personaForm.get('telefonoRefAcom').touched || personaForm.get('telefonoRefAcom').dirty) && personaForm.get('telefonoRefAcom').errors">
+                              <span *ngIf="personaForm.get('telefonoRefAcom').errors.required">
+                                Por favor ingrese el teléfono
+                              </span>
+                              <span *ngIf="personaForm.get('telefonoRefAcom').errors.noTelefono">
+                                Por favor ingrese un teléfono válido de entre 7 y 10 dígitos    
+                              </span>                          
+                          </span>
+                        </div>
+                      </div>      
+                    </div>      
+                  </div> 
+                  
+                  <div class="form-group"
+                    [ngClass]="{'has-error': (personaForm.get('correoRefAcom').touched || personaForm.get('correoRefAcom').dirty) && !personaForm.get('correoRefAcom').valid }">
+                    <label class="col-md-2 col-lg-2 col-sm-2control-label" 
+                        for="correoRefAcomId">Correo electrónico</label>
+
+                    <div class="col-md-8 col-sm-8 col-lg-8">
+                      <input class="form-control" 
+                            id="correoRefAcomId" 
+                            type="email" 
+                            placeholder="Correo electrónico" 
+                            formControlName="correoRefAcom" />
+                      <span class="help-block" *ngIf="(personaForm.get('correoRefAcom').touched || personaForm.get('correoRefAcom').dirty) && personaForm.get('correoRefAcom').errors">
+                          <span *ngIf="personaForm.get('correoRefAcom').errors.pattern">
+                            Por favor ingrese un correo electrónico válido
+                          </span>
+
+                          <!-- This one does not work -->
+                          <span *ngIf="personaForm.get('correoRefAcom').errors.email">
+                            Por favor ingrese un correo electrónico válido
+                          </span>
+                      </span>
+                    </div>
+                  </div>                  
+
+                  
+              </div>
+
+              <div class="form-group">
+                  <div class="col-md-4 col-sm-4 col-lg-4 col-md-offset-2 col-lg-offset-2 col-sm-offset-2">
+                      <span>
+                          <button class="btn btn-primary"
+                                  type="submit"
+                                  [disabled]="!personaForm.valid">
+                              Save
+                          </button>
+                      </span>
+<!--                       <span>
+                        <button class="btn btn-default"
+                                type="button"
+                                (click)="populateTestData()">
+                            Test Data
+                        </button>
+                    </span>  -->                     
+                  </div>
+              </div>
+          </fieldset>
+      </form>
+  </div>
+</div>
+<!-- <br>Dirty: {{ personaForm.dirty }} 
+<br>Touched: {{ personaForm.touched }}
+<br>Valid: {{ personaForm.valid }}
+<br>Value: {{ personaForm.value | json }} -->

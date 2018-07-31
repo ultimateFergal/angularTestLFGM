@@ -1,0 +1,59 @@
+<div class='card'>
+    <div class='card-header'>
+      Lista de registrados
+    </div>
+    <div class='card-body'>
+      <div class='table-responsive'>
+        <table class='table'
+               *ngIf='peopleList && peopleList.length'>
+          <thead>
+            <tr>
+              <!-- <th>
+                <button class='btn btn-primary'
+                        (click)='toggleImage()'>
+                  {{showImage ? 'Hide' : 'Show'}} Image
+                </button> 
+              </th>-->
+              <th>Tipo Persona</th>
+              <th>Tipo Documento</th>
+              <th>Documento</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              <th>Fecha de nacimiento</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+              <th>Referencia/Acompañante</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              <th>Parentesco</th>
+              <th>Nro contacto</th>
+              <th>Correo contacto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let persona of peopleList'>
+              <!-- <td>
+                <a [routerLink]="['/products', product.id]">
+                  {{ product.productName }}
+                </a>
+              </td> -->
+              <td>{{ persona.tipoProfPac }}</td>
+              <td>{{ persona.tipoDocumento }}</td>
+              <td>{{ persona.documento }}</td>
+              <td>{{ persona.nombres }}</td>
+              <td>{{ persona.apellidos }}</td>
+              <td>{{ persona.fechaNacimiento }}</td>
+              <td>{{ persona.correo }}</td>
+              <td>{{ persona.telefono }}</td>
+              <td>{{ persona.tipoRefAcom }}</td>
+              <td>{{ persona.nombresRefAcom }}</td>
+              <td>{{ persona.apellidosRefAcom }}</td>
+              <td>{{ persona.parentescoRefAcom }}</td>
+              <td>{{ persona.telefonoRefAcom }}</td>
+              <td>{{ persona.correoRefAcom }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
