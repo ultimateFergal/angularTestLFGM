@@ -1,5 +1,10 @@
 # AngularTestLFGM
 
+La API de Fire base usada es https://angulartestlfgm.firebaseio.com/ con accesos de lectura y escritura públicos
+Descargar NPM  - npm install
+
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.1.
 
 ## Development server
